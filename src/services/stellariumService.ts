@@ -1,7 +1,7 @@
 import { PLANET_NAMES } from "../utils/constants";
-import { Planet } from "../utils/interfaces";
+import { Planet, Planets, planetsImgs } from "../utils/interfaces";
 
-export const getPlanetInfo = async (planetName: string): Promise<Planet> => {
+export const getPlanetInfo = async (planetName: Planets): Promise<Planet> => {
     try {
         const response = await fetch(`http://localhost:8090/api/objects/info?name=${planetName}&format=json`);
         if (!response.ok) {
@@ -15,6 +15,11 @@ export const getPlanetInfo = async (planetName: string): Promise<Planet> => {
             sizeDeg: data["size-deg"],
             magnitude: data.vmag,
             phaseAngle: data["phase-angle-deg"],
+            azimuth: data.azimuth,
+            altitude: data.altitude,
+            distance: data.distance,
+            size: data.size * 1000,
+            texture: planetsImgs[planetName]
         };
     } catch (error) {
         throw new Error(`Could not fetch data for ${planetName}`);
