@@ -7,12 +7,14 @@ import Maps from "./pages/Maps";
 import { RoutesPath } from "./utils/navigationConst";
 import Lessons from "./pages/Lessons";
 import CuriousFacts from "./pages/CuriousFacts";
+import CuriousFactModal from "./components/modal/CuriousFactModal";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <Header />
+        <CuriousFactModal/>
 
         <Routes>
           <Route path={RoutesPath.Home} element={<Home />} />
