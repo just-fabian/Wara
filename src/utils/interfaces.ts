@@ -10,6 +10,13 @@ export interface Astro {
   distance: number;
   size: number;
   texture: string;
+  position: PositionInMap;
+}
+
+export interface PositionInMap {
+  x: number;
+  y: number;
+  z: number;
 }
 
 export enum Planets {
@@ -21,6 +28,16 @@ export enum Planets {
   Saturn = "Saturn",
   Uranus = "Uranus",
   Neptune = "Neptune",
+}
+
+export enum Astros {
+  Sun = "Sun",
+  Moon = "Moon",
+}
+
+export const astroImgs : Record<Astros, string> = {
+  [Astros.Sun]: "src/assets/astros/sun.jpg",
+  [Astros.Moon]: "src/assets/astros/moon.jpg",
 }
 
 

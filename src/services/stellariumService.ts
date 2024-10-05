@@ -32,6 +32,7 @@ export const getAstroInfo = async (name: string, pathTexture: string ): Promise<
             distance: data.distance,
             size: data.size * 1000,
             texture: pathTexture,
+            position: { x: 0, y: 0, z: 0 },
         };
     } catch (error) {
         throw new Error(`Could not fetch data for ${name}`);
