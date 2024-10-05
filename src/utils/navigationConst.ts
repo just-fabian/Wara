@@ -1,4 +1,7 @@
 export const enum RoutesPath {
     Home = "/",
-    Maps = "/maps",
+    Maps = "/mapa",
+    Lessons = "/lecciones",
+    CuriousFacts = "/datos-curiosos",
+    Events = "/eventos"
 }
