@@ -8,9 +8,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Header />
-        <div
-          style={{ height: "100vh", width: "100vw", background: "#000" }}
-        ></div>
+        <div className="full-bg"></div>
+        <div className="full-bg"></div>
+
         <Container></Container>
       </BrowserRouter>
     </ThemeProvider>

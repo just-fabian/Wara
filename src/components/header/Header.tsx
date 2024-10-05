@@ -46,23 +46,39 @@ const Header: React.FC = () => {
     backgroundColor: scroll ? "black" : "transparent",
     boxShadow: "none",
     transition: "background-color 0.3s ease",
-    paddingTop: 24,
-    paddingBottom: 24,
+    paddingTop: 4,
+    paddingBottom: 4,
   }));
 
   const menuItems = (
     <>
-      <ListItem component={Link} to="/clases">
-        <ListItemText primary="Clases" />
+      <ListItem component={Link} to="">
+        <ListItemText>
+          <Typography sx={{ color: "#fff", textAlign: "center" }}>
+            Lecciones
+          </Typography>
+        </ListItemText>
       </ListItem>
-      <ListItem component={Link} to="/datos-curiosos">
-        <ListItemText primary="Datos Curiosos" />
+      <ListItem component={Link} to="">
+        <ListItemText>
+          <Typography sx={{ color: "#fff", textAlign: "center" }}>
+            Datos Curiosos
+          </Typography>
+        </ListItemText>
       </ListItem>
-      <ListItem component={Link} to="/eventos">
-        <ListItemText primary="Eventos" />
+      <ListItem component={Link} to="">
+        <ListItemText>
+          <Typography sx={{ color: "#fff", textAlign: "center" }}>
+            Eventos
+          </Typography>
+        </ListItemText>
       </ListItem>
-      <ListItem component={Link} to="/ver-mapa">
-        <ListItemText primary="Ver Mapa" />
+      <ListItem component={Link} to="">
+        <Link to="">
+          <Button variant="contained" color="primary" className="header-button">
+            Ver Mapa
+          </Button>
+        </Link>
       </ListItem>
     </>
   );
@@ -100,30 +116,43 @@ const Header: React.FC = () => {
                 onOpen={toggleDrawer(true)}
                 onClose={toggleDrawer(false)}
               >
-                <Box role="presentation">
-                  <List onClick={toggleDrawer(false)}>{menuItems}</List>
-                </Box>
+                <div
+                  style={{ background: "#000", height: "100vh", color: "#fff" }}
+                >
+                  <Box
+                    role="presentation"
+                    paddingRight={7}
+                    paddingLeft={7}
+                    paddingTop={4}
+                  >
+                    <List onClick={toggleDrawer(false)}>{menuItems}</List>
+                  </Box>
+                </div>
               </SwipeableDrawer>
             </>
           ) : (
             <Box>
               <Link to="">
-                <Button variant="text" style={{ color: "#fff" }}>
-                  Clases
+                <Button variant="text" className="header-button">
+                  Lecciones
                 </Button>
               </Link>
               <Link to="">
-                <Button variant="text" style={{ color: "#fff" }}>
+                <Button variant="text" className="header-button">
                   Datos Curiosos
                 </Button>
               </Link>
               <Link to="">
-                <Button variant="text" style={{ color: "#fff" }}>
+                <Button variant="text" className="header-button">
                   Eventos
                 </Button>
               </Link>
               <Link to="">
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="header-button"
+                >
                   Ver Mapa
                 </Button>
               </Link>
