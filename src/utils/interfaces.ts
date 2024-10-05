@@ -34,3 +34,9 @@ export const planetsImgs: Record<Planets, string> = {
   [Planets.Uranus]: "src/assets/planets/uranus.svg",
   // [Planets.Earth]: "src/assets/planets/uranus.svg",
 }
+
+export interface ApodData {
+  title: string;
+  explanation: string;
+  url: string;
+}
