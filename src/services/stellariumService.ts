@@ -22,7 +22,6 @@ export const getPlanetInfo = async (planetName: string): Promise<Planet> => {
 }
 
 export const getAllPlanetsInfo = async (): Promise<Planet[]> => {
-    console.log("Get all planets started");
     try {
         const requests = PLANET_NAMES.map(name => getPlanetInfo(name));
         return await Promise.all(requests);

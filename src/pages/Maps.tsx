@@ -9,8 +9,6 @@ const Maps: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    console.log("useEffect asdasd");
-
     const fetchPlanets = async () => {
         console.log("fetching planets");
         setLoading(true);
