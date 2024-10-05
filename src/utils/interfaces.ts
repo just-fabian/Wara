@@ -1,4 +1,4 @@
-export interface Planet {
+export interface Astro {
   name: string;
   phase: number;
   distanceKm: number;

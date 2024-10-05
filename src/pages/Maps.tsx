@@ -1,40 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Planet } from "../utils/interfaces";
-import { getAllPlanetsInfo } from "../services/stellariumService";
+import { Astro } from "../utils/interfaces";
+import { getAllPlanetsInfo, getAstroInfo } from "../services/stellariumService";
 import { Canvas, useLoader } from "@react-three/fiber";
-import { Sphere, OrbitControls } from "@react-three/drei";
-import { MathUtils, TextureLoader, Vector3 } from "three";
+import { OrbitControls, Stars } from "@react-three/drei";
+import { Color, MathUtils, TextureLoader, Vector3 } from "three";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
+import PlanetMesh from "../components/PlanetMesh";
 
-const PlanetMesh = ({ planet }: { planet: Planet }) => {
-  const texture = useLoader(TextureLoader, planet.texture);
 
-  const calculatePosition = () => {
-    const { azimuth, altitude, distance } = planet;
-
-    // Convert azimuth and altitude to radians
-    const azimuthRad = MathUtils.degToRad(azimuth);
-    const altitudeRad = MathUtils.degToRad(altitude);
-
-    // Convert spherical coordinates (distance, azimuth, altitude) to 3D cartesian coordinates (x, y, z)
-    const x = distance * Math.cos(altitudeRad) * Math.sin(azimuthRad);
-    const y = distance * Math.sin(altitudeRad);
-    const z = distance * Math.cos(altitudeRad) * Math.cos(azimuthRad);
-
-    return [x, y, z];
-  };
-
-  const [x, y, z] = calculatePosition();
-
-  return (
-    <mesh position={[x, y, z]}>
-      {/* Use the planet's texture */}
-      <sphereGeometry args={[planet.size, 32, 32]} />
-      <meshStandardMaterial map={texture} />
-    </mesh>
-  );
-};
 const Maps: React.FC = () => {
-  const [planets, setPlanets] = useState<Planet[]>([]);
+  const [planets, setPlanets] = useState<Astro[]>([]);
+  const [sun, setSun] = useState<Astro>({} as Astro);
   const [loading, setLoading] = useState<boolean>(true);
   const [userPosition, setUserPosition] = useState<{
     lat: number;
@@ -55,6 +31,8 @@ const Maps: React.FC = () => {
     const fetchPlanets = async () => {
       setLoading(true);
       const planetsResponse = await getAllPlanetsInfo();
+      const sunResponse = await getAstroInfo("Sun", "src/assets/astros/sun.jpg");
+      setSun(sunResponse);
       console.log(planetsResponse);
       setPlanets(planetsResponse);
       setLoading(false);
@@ -67,16 +45,20 @@ const Maps: React.FC = () => {
   }
 
   return (
-    <Canvas style={{ height: "100vh", background: "#000" }}>
-      {/* Enable orbit controls for 360-degree rotation */}
+    <Canvas style={{ height: "100vh", backgroundColor: "#000" }}>
       <OrbitControls enableZoom={true} />
-
-      <ambientLight />
-      <pointLight position={[10, 10, 10]} />
-
+      <Stars radius={300} depth={60} count={20000} factor={7} saturation={0} fade={true} />
+      <ambientLight intensity={1.0} /> {/* Aumentar la intensidad de la luz ambiental */}
+      <pointLight position={[10, 10, 10]} intensity={2} /> {/* Aumentar la intensidad de la luz puntual */}
+      <directionalLight position={[0, 0, 5]} intensity={2} /> {/* Aumentar la intensidad de la luz direccional */}
+      <pointLight position={[0, 0, 0]} intensity={3} /> {/* Añadir una luz puntual en el centro para simular el sol */}
       {planets.map((planet) => {
-        return <PlanetMesh planet={planet} />;
+        return <PlanetMesh key={planet.name} planet={planet} />;
       })}
+      <PlanetMesh key="Sun" planet={sun} size={1}/>
+      <EffectComposer>
+        <Bloom luminanceThreshold={0.3} luminanceSmoothing={0.9} height={300} />
+      </EffectComposer>
     </Canvas>
   );
 };

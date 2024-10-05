@@ -1,11 +1,23 @@
 import { PLANET_NAMES } from "../utils/constants";
-import { Planet, Planets, planetsImgs } from "../utils/interfaces";
+import { Astro, Planets, planetsImgs } from "../utils/interfaces";
 
-export const getPlanetInfo = async (planetName: Planets): Promise<Planet> => {
+export const getAllPlanetsInfo = async (): Promise<Astro[]> => {
     try {
-        const response = await fetch(`http://localhost:8090/api/objects/info?name=${planetName}&format=json`);
+        const requests = PLANET_NAMES.map(name => getAstroInfo(name, planetsImgs[name]));
+        return await Promise.all(requests);
+    } catch (error) {
+        throw new Error('Could not fetch data for all planets');
+    }
+}
+
+export const getAstroInfo = async (name: string, pathTexture: string ): Promise<Astro> => {
+    try {
+        const url = `http://localhost:8090/api/objects/info?name=${name}&format=json`;
+        console.log("url : ", url);
+        const response = await fetch(url);
+
         if (!response.ok) {
-            throw new Error(`Error fetching data for ${planetName}: ${response.statusText}`);
+            throw new Error(`Error fetching data for ${name}: ${response.statusText}`);
         }
         const data = await response.json();
         return {
@@ -19,18 +31,9 @@ export const getPlanetInfo = async (planetName: Planets): Promise<Planet> => {
             altitude: data.altitude,
             distance: data.distance,
             size: data.size * 1000,
-            texture: planetsImgs[planetName]
+            texture: pathTexture,
         };
     } catch (error) {
-        throw new Error(`Could not fetch data for ${planetName}`);
-    }
-}
-
-export const getAllPlanetsInfo = async (): Promise<Planet[]> => {
-    try {
-        const requests = PLANET_NAMES.map(name => getPlanetInfo(name));
-        return await Promise.all(requests);
-    } catch (error) {
-        throw new Error('Could not fetch data for all planets');
+        throw new Error(`Could not fetch data for ${name}`);
     }
 }
