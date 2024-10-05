@@ -15,6 +15,7 @@ import {
 import { Link } from "react-router-dom";
 import { Container, styled, useMediaQuery } from "@mui/system";
 import { MdMenu } from "react-icons/md";
+import { RoutesPath } from "../../utils/navigationConst";
 
 const Header: React.FC = () => {
   const [scroll, setScroll] = useState(false);
@@ -52,28 +53,28 @@ const Header: React.FC = () => {
 
   const menuItems = (
     <>
-      <ListItem component={Link} to="">
+      <ListItem component={Link} to={RoutesPath.Lessons}>
         <ListItemText>
           <Typography sx={{ color: "#fff", textAlign: "center" }}>
             Lecciones
           </Typography>
         </ListItemText>
       </ListItem>
-      <ListItem component={Link} to="">
+      <ListItem component={Link} to={RoutesPath.CuriousFacts}>
         <ListItemText>
           <Typography sx={{ color: "#fff", textAlign: "center" }}>
             Datos Curiosos
           </Typography>
         </ListItemText>
       </ListItem>
-      <ListItem component={Link} to="">
+      <ListItem component={Link} to={RoutesPath.Events}>
         <ListItemText>
           <Typography sx={{ color: "#fff", textAlign: "center" }}>
             Eventos
           </Typography>
         </ListItemText>
       </ListItem>
-      <ListItem component={Link} to="">
+      <ListItem component={Link} to={RoutesPath.Maps}>
         <Link to="">
           <Button variant="contained" color="primary" className="header-button">
             Ver Mapa
@@ -87,18 +88,19 @@ const Header: React.FC = () => {
     <StyledAppBar>
       <Container>
         <Toolbar>
-          <Typography
-            variant="h4"
-            component="div"
-            sx={{
-              flexGrow: 1,
-              fontWeight: "bold",
-              color: "#fff",
-              letterSpacing: 2,
-            }}
-          >
-            WARA
-          </Typography>
+          <Link to={RoutesPath.Home} style={{ flexGrow: 1 }}>
+            <Typography
+              variant="h4"
+              component="div"
+              sx={{
+                color: "#fff",
+                fontWeight: "bold",
+                letterSpacing: 2,
+              }}
+            >
+              WARA
+            </Typography>
+          </Link>
           {isMobile ? (
             <>
               <IconButton
@@ -132,22 +134,22 @@ const Header: React.FC = () => {
             </>
           ) : (
             <Box>
-              <Link to="">
+              <Link to={RoutesPath.Lessons}>
                 <Button variant="text" className="header-button">
                   Lecciones
                 </Button>
               </Link>
-              <Link to="">
+              <Link to={RoutesPath.CuriousFacts}>
                 <Button variant="text" className="header-button">
                   Datos Curiosos
                 </Button>
               </Link>
-              <Link to="">
+              <Link to={RoutesPath.Events}>
                 <Button variant="text" className="header-button">
                   Eventos
                 </Button>
               </Link>
-              <Link to="">
+              <Link to={RoutesPath.Maps}>
                 <Button
                   variant="contained"
                   color="primary"
