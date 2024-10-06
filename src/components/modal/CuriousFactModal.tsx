@@ -94,7 +94,7 @@ const CuriousFactModal: React.FC = () => {
               </IconButton>
 
               <Typography variant="h5" component="div" id="modal-title">
-                Dato curioso del día
+                Curious fact of the day
               </Typography>
 
               <Typography variant="subtitle1" component="div" id="modal-title">
@@ -124,7 +124,7 @@ const CuriousFactModal: React.FC = () => {
                     onClick={() => navigate(RoutesPath.CuriousFacts)}
                     style={{ color: "#fff" }}
                   >
-                    Ver más
+                    See more
                   </Button>
                 )}
               </Box>
